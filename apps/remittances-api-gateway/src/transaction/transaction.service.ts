@@ -6,7 +6,16 @@ import { CreateTransactionRequestDto } from 'apps/transactions/src/dto/create.tr
 export class TransactionService {
 
     constructor(@Inject('TRANSACTION') private userClient: ClientProxy) { }
+
     createTransaction(transaction: CreateTransactionRequestDto) {
         return this.userClient.send('transactions-create', transaction);
+    }
+
+    deleteTransaction(body: { transactionId: string; userId: string }) {
+        return this.userClient.send('transactions-delete', body);
+    }
+
+    findBySenderId(senderId: string) {
+        return this.userClient.send('transactions-findBySenderId', senderId);
     }
 }

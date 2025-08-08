@@ -10,4 +10,13 @@ export class TransactionsController {
   transactionsCreate(transaction: CreateTransactionRequestDto) {
     return this.transactionsService.create(transaction);
   }
+
+  @MessagePattern('transactions-delete')
+  transactionsDelete({ transactionId, userId }: { transactionId: string; userId: string }) {
+    return this.transactionsService.delete(transactionId, userId);
+  }
+  @MessagePattern('transactions-findBySenderId')
+  transactionsFindBySenderId(senderId: string) {
+    return this.transactionsService.findBySenderId(senderId);
+  }
 }

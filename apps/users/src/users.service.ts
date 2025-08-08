@@ -43,9 +43,9 @@ export class UsersService {
 
   async login(loginDto: LoginDto): Promise<OperationResult<LoginResponseDto>> {
     try {
-      // const apiKey = "AIzaSyB3QdlZhm-4LnFVGR0PIv-SuxI_MSRHcW8";
+      console.log('Login request:', loginDto);
       const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.configService.get<string>('FIREBASE_API_KEY')}`,
+        `${this.configService.get<string>('FIREBASE_API_SIGNIN_URL')}`,
         {
           email: loginDto.email || '',
           password: loginDto.password,
