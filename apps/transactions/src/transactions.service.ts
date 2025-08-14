@@ -13,13 +13,12 @@ export class TransactionsService {
     return this.firebaseService.getDb();
   }
 
-  async create(request: CreateTransactionRequestDto): Promise<OperationResult<CreateTransactionDto>> {
+  async create( senderId:string,request: CreateTransactionRequestDto): Promise<OperationResult<CreateTransactionDto>> {
     try {
       console.log('Incoming transaction request is here:', request);
-      console.log('Creating transaction for senderId:', request.senderId, 'with data:', request);
       const docRef = this.db.collection('transactions').doc();
       const transaction: CreateTransactionDto = {
-        senderId: request.senderId,
+        senderId:senderId,
         transactionId: docRef.id,
         timestamp: new Date(),
         status: 'completed',
@@ -45,7 +44,7 @@ export class TransactionsService {
     }
   }
 
-  async findBySenderId(senderId: string): Promise<OperationResult<CreateTransactionDto[]>> {
+  async findAllTransactionByCurrentUser(senderId: string): Promise<OperationResult<CreateTransactionDto[]>> {
     try {
       console.log(`Searching for transactions sent by userId: ${senderId}`);
 

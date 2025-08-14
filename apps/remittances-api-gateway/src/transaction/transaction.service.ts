@@ -5,17 +5,19 @@ import { CreateTransactionRequestDto } from 'apps/transactions/src/dto/create.tr
 @Injectable()
 export class TransactionService {
 
-    constructor(@Inject('TRANSACTION') private userClient: ClientProxy) { }
+    constructor(@Inject('TRANSACTION') private transactionClient: ClientProxy) { }
 
-    createTransaction(transaction: CreateTransactionRequestDto) {
-        return this.userClient.send('transactions-create', transaction);
+    createTransaction(senderId: string, transaction: CreateTransactionRequestDto) {
+        console.log('Transaction Users Id:', senderId);
+        console.log('Transaction request:', transaction);
+        return this.transactionClient.send('transactions-create', { senderId, transaction });
     }
 
     deleteTransaction(body: { transactionId: string; userId: string }) {
-        return this.userClient.send('transactions-delete', body);
+        return this.transactionClient.send('transactions-delete', body);
     }
 
     findBySenderId(senderId: string) {
-        return this.userClient.send('transactions-findBySenderId', senderId);
+        return this.transactionClient.send('transactions-findBySenderId', senderId);
     }
 }

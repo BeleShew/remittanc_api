@@ -18,4 +18,8 @@ export class FirebaseService implements OnModuleInit {
     public getDb(): admin.firestore.Firestore {
         return admin.firestore();
     }
+
+    public async verifyToken(idToken: string): Promise<admin.auth.DecodedIdToken> {
+        return this.auth.verifyIdToken(idToken);
+    }
 }
